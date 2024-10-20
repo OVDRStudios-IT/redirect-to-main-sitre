@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OVDR Studios Shop</title>
+    <title>OVDR Studios Shop - Coming Soon</title>
     <meta content="OVDR Studios" property="og:site_name"/>
     <meta name="og:description" content="Future website for OVDR Studios merch, currently just shows alternative ways to support us.">
-    <meta property="og:title" content="Shop">
+    <meta property="og:title" content="OVDR Shop - Coming Soon">
     <meta content="#6F0096" data-react-helmet="true" name="theme-color" />
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="OVDR Studios Shop - Coming Soon">
@@ -39,11 +39,12 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 90%;
+            width: 600px;
             text-align: center;
             background-color: var(--card-bg);
             padding: 40px;
@@ -53,6 +54,7 @@
             transform: translateY(50px) scale(0.9);
             animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
             z-index: 10;
+            position: relative;
         }
 
         @keyframes popIn {
@@ -64,7 +66,7 @@
 
         h1 {
             color: var(--accent-color);
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             margin-bottom: 20px;
             position: relative;
             display: inline-block;
@@ -86,14 +88,11 @@
         }
 
         p {
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             margin-bottom: 30px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s ease forwards 0.5s;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         @keyframes fadeInUp {
@@ -119,7 +118,7 @@
             border-radius: 5px;
             font-weight: bold;
             transition: all 0.3s ease;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             position: relative;
             overflow: hidden;
         }
@@ -150,20 +149,16 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .floating-shapes {
+        #cursor-glow {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
             pointer-events: none;
             z-index: 1;
-        }
-
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            transition: transform 0.2s ease-out;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: radial-gradient(circle, rgba(179, 136, 255, 0.4) 0%, rgba(179, 136, 255, 0) 70%);
         }
 
         @media (max-width: 600px) {
@@ -171,8 +166,8 @@
                 padding: 30px;
             }
 
-            h1 {
-                font-size: 2rem;
+            .button-container {
+                flex-direction: column;
             }
 
             .support-button {
@@ -182,7 +177,7 @@
     </style>
 </head>
 <body>
-    <div class="floating-shapes"></div>
+    <div id="cursor-glow"></div>
     <div class="container">
         <h1>OVDR Studios Shop</h1>
         <p>Our merch shop is coming soon! In the meantime, here are other ways to support us:</p>
@@ -195,9 +190,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const buttons = document.querySelectorAll('.support-button');
-            const shapes = ['◆', '■', '●', '▲'];
-            const colors = ['#b388ff', '#9c69ff', '#7c4dff', '#651fff'];
-            const floatingShapes = document.querySelector('.floating-shapes');
+            const cursorGlow = document.getElementById('cursor-glow');
+            const container = document.querySelector('.container');
             
             buttons.forEach((button, index) => {
                 button.style.opacity = '0';
@@ -210,40 +204,30 @@
                 }, (index + 1) * 200);
             });
 
-            // Create floating shapes
-            for (let i = 0; i < 20; i++) {
-                const shape = document.createElement('div');
-                shape.className = 'shape';
-                shape.style.left = `${Math.random() * 100}vw`;
-                shape.style.top = `${Math.random() * 100}vh`;
-                shape.style.fontSize = `${Math.random() * 20 + 10}px`;
-                shape.style.color = colors[Math.floor(Math.random() * colors.length)];
-                shape.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-                floatingShapes.appendChild(shape);
-            }
-
-            // Cursor interactivity
+            // Cursor glow effect
             if (window.matchMedia("(pointer: fine)").matches) {
                 document.addEventListener('mousemove', (e) => {
-                    const shapes = document.querySelectorAll('.shape');
-                    shapes.forEach(shape => {
-                        const dx = e.clientX - shape.getBoundingClientRect().left;
-                        const dy = e.clientY - shape.getBoundingClientRect().top;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        const maxDistance = 100;
-                        
-                        if (distance < maxDistance) {
-                            const scale = 1 + (maxDistance - distance) / maxDistance;
-                            const angle = Math.atan2(dy, dx);
-                            const translateX = Math.cos(angle) * (maxDistance - distance) * 0.5;
-                            const translateY = Math.sin(angle) * (maxDistance - distance) * 0.5;
-                            shape.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-                            shape.style.opacity = 0.2 + (maxDistance - distance) / maxDistance * 0.3;
-                        } else {
-                            shape.style.transform = 'translate(0, 0) scale(1)';
-                            shape.style.opacity = 0.1;
-                        }
-                    });
+                    const x = e.clientX;
+                    const y = e.clientY;
+                    
+                    cursorGlow.style.left = `${x - 100}px`;
+                    cursorGlow.style.top = `${y - 100}px`;
+                    
+                    const containerRect = container.getBoundingClientRect();
+                    if (x >= containerRect.left && x <= containerRect.right &&
+                        y >= containerRect.top && y <= containerRect.bottom) {
+                        cursorGlow.style.opacity = '0';
+                    } else {
+                        cursorGlow.style.opacity = '1';
+                    }
+                });
+
+                document.addEventListener('mouseenter', () => {
+                    cursorGlow.style.opacity = '1';
+                });
+
+                document.addEventListener('mouseleave', () => {
+                    cursorGlow.style.opacity = '0';
                 });
             }
         });
