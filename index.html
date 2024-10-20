@@ -274,7 +274,6 @@
                     cursorGlow.style.opacity = '0';
                 });
             }
-
             // Function to display the last update time
             function displayLastUpdateTime() {
                 const lastUpdatedElement = document.getElementById('last-updated');
@@ -286,6 +285,8 @@
                     lastUpdatedElement.textContent = 'Last update time unavailable';
                 }
             }
+
+            displayLastUpdateTime();
         });
     </script>
 </body>
