@@ -48,7 +48,7 @@
             width: 600px;
             text-align: center;
             background-color: var(--card-bg);
-            padding: 40px;
+            padding: 60px; /* Increased padding for more spacing */
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             opacity: 0;
@@ -68,7 +68,7 @@
         h1 {
             color: var(--accent-color);
             font-size: clamp(2rem, 5vw, 2.5rem);
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* Increased margin for more spacing */
             position: relative;
             display: inline-block;
         }
@@ -90,7 +90,7 @@
 
         p {
             font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-            margin-bottom: 30px;
+            margin-bottom: 40px; /* Increased margin for more spacing */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s ease forwards 0.5s;
@@ -107,7 +107,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 30px; /* Increased gap for more spacing */
         }
 
         .support-button {
@@ -148,14 +148,14 @@
 
         .support-button:hover {
             background-color: var(--secondary-color);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05); /* Added scale for slight growth */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         #cursor-glow {
             position: fixed;
-            width: 300px;
-            height: 300px;
+            width: 200px; /* Reduced size */
+            height: 200px; /* Reduced size */
             border-radius: 50%;
             pointer-events: none;
             z-index: 1;
@@ -187,7 +187,7 @@
 
         @media (max-width: 600px) {
             .container {
-                padding: 30px;
+                padding: 40px; /* Adjusted padding for mobile */
             }
         }
     </style>
@@ -225,7 +225,7 @@
             });
 
             // Create floating shapes
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 30; i++) { // Increased number of shapes
                 const shape = document.createElement('div');
                 shape.className = 'shape';
                 shape.style.left = `${Math.random() * 100}vw`;
@@ -238,14 +238,14 @@
                 floatingShapes.appendChild(shape);
             }
 
-            // Cursor glow effect
+            // Cursor glow effect (only for non-mobile devices)
             if (window.matchMedia("(pointer: fine)").matches) {
                 document.addEventListener('mousemove', (e) => {
                     const x = e.clientX;
                     const y = e.clientY;
                     
-                    cursorGlow.style.left = `${x - 150}px`;
-                    cursorGlow.style.top = `${y - 150}px`;
+                    cursorGlow.style.left = `${x - 100}px`; // Adjusted for smaller glow
+                    cursorGlow.style.top = `${y - 100}px`; // Adjusted for smaller glow
                     
                     const containerRect = container.getBoundingClientRect();
                     if (x >= containerRect.left && x <= containerRect.right &&
