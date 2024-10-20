@@ -52,6 +52,7 @@
             opacity: 0;
             transform: translateY(50px) scale(0.9);
             animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            z-index: 10;
         }
 
         @keyframes popIn {
@@ -85,11 +86,14 @@
         }
 
         p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             margin-bottom: 30px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s ease forwards 0.5s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         @keyframes fadeInUp {
@@ -153,18 +157,13 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: 1;
         }
 
         .shape {
             position: absolute;
             opacity: 0.1;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(100vw, 100vh) rotate(360deg); }
+            transition: transform 0.2s ease-out;
         }
 
         @media (max-width: 600px) {
@@ -174,10 +173,6 @@
 
             h1 {
                 font-size: 2rem;
-            }
-
-            p {
-                font-size: 1rem;
             }
 
             .support-button {
@@ -224,9 +219,32 @@
                 shape.style.fontSize = `${Math.random() * 20 + 10}px`;
                 shape.style.color = colors[Math.floor(Math.random() * colors.length)];
                 shape.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-                shape.style.animationDuration = `${Math.random() * 40 + 10}s`;
-                shape.style.animationDelay = `${Math.random() * 5}s`;
                 floatingShapes.appendChild(shape);
+            }
+
+            // Cursor interactivity
+            if (window.matchMedia("(pointer: fine)").matches) {
+                document.addEventListener('mousemove', (e) => {
+                    const shapes = document.querySelectorAll('.shape');
+                    shapes.forEach(shape => {
+                        const dx = e.clientX - shape.getBoundingClientRect().left;
+                        const dy = e.clientY - shape.getBoundingClientRect().top;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const maxDistance = 100;
+                        
+                        if (distance < maxDistance) {
+                            const scale = 1 + (maxDistance - distance) / maxDistance;
+                            const angle = Math.atan2(dy, dx);
+                            const translateX = Math.cos(angle) * (maxDistance - distance) * 0.5;
+                            const translateY = Math.sin(angle) * (maxDistance - distance) * 0.5;
+                            shape.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                            shape.style.opacity = 0.2 + (maxDistance - distance) / maxDistance * 0.3;
+                        } else {
+                            shape.style.transform = 'translate(0, 0) scale(1)';
+                            shape.style.opacity = 0.1;
+                        }
+                    });
+                });
             }
         });
     </script>
