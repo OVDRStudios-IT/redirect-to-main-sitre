@@ -275,12 +275,16 @@
                 });
             }
 
-            // Format the last updated date
-            const lastUpdatedElement = document.getElementById('last-updated');
-            const commitDate = lastUpdatedElement.textContent.split(': ')[1];
-            if (commitDate !== '__CLOUDFLARE_PAGES_COMMIT_DATE__') {
-                const formattedDate = new Date(commitDate).toLocaleString();
-                lastUpdatedElement.textContent = `Last updated: ${formattedDate}`;
+            // Function to display the last update time
+            function displayLastUpdateTime() {
+                const lastUpdatedElement = document.getElementById('last-updated');
+                const buildTime = '{{BUILD_TIME}}';
+                if (buildTime && buildTime !== '{{BUILD_TIME}}') {
+                    const date = new Date(buildTime);
+                    lastUpdatedElement.textContent = `Last updated: ${date.toLocaleString()}`;
+                } else {
+                    lastUpdatedElement.textContent = 'Last update time unavailable';
+                }
             }
         });
     </script>
