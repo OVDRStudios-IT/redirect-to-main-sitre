@@ -215,6 +215,19 @@
     <div id="last-updated">Last update time unavailable.</div>
 
     <script>
+                    // Function to display the last update time
+        function displayLastUpdateTime() {
+            const lastUpdatedElement = document.getElementById('last-updated');
+            const buildTime = '{{BUILD_TIME}}';
+            if (buildTime && buildTime !== '{{BUILD_TIME}}') {
+                 const date = new Date(buildTime);
+                 lastUpdatedElement.textContent = `Last updated: ${date.toLocaleString()}`;
+               } else {
+                lastUpdatedElement.textContent = 'Last update time unavailable';
+            }
+         }
+
+        
         document.addEventListener('DOMContentLoaded', () => {
             const buttons = document.querySelectorAll('.support-button');
             const cursorGlow = document.getElementById('cursor-glow');
@@ -273,17 +286,6 @@
                 document.addEventListener('mouseleave', () => {
                     cursorGlow.style.opacity = '0';
                 });
-            }
-            // Function to display the last update time
-            function displayLastUpdateTime() {
-                const lastUpdatedElement = document.getElementById('last-updated');
-                const buildTime = '{{BUILD_TIME}}';
-                if (buildTime && buildTime !== '{{BUILD_TIME}}') {
-                    const date = new Date(buildTime);
-                    lastUpdatedElement.textContent = `Last updated: ${date.toLocaleString()}`;
-                } else {
-                    lastUpdatedElement.textContent = 'Last update time unavailable';
-                }
             }
 
             displayLastUpdateTime();
