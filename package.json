@@ -1,0 +1,8 @@
+{
+  "name": "ovdr-shop",
+  "version": "1.0.0",
+  "description": "The OVDR Shop",
+  "scripts": {
+    "build": "node inject-build-time.js"
+  }
+}
