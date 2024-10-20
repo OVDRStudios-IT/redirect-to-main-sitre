@@ -1,16 +1,151 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>OVDR Shop</title>
-    <meta name="description" content="Future website for OVDR Studios merch, currently just redirects to the main site.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVDR Studios Shop - Coming Soon</title>
+    <meta content="OVDR Studios" property="og:site_name"/>
+    <meta name="og:description" content="OVDR Studios Shop - Coming Soon. Support us through YouTube membership or BisectHosting!">
+    <meta property="og:title" content="OVDR Shop - Placeholder">
+    <meta content="#6F0096" data-react-helmet="true" name="theme-color" />
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="OVDR Studios Shop - Coming Soon">
     
-    <script>
-        window.location.href = "https://ovdrstudios.com";
-    </script>
+    <link rel="icon" type="image/png" href="https://ovdrstudios.com/assets/images/favicon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-color: #b388ff;
+            --secondary-color: #9c69ff;
+            --card-bg: #2a2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            text-align: center;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: var(--accent-color);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: colorPulse 4s infinite alternate;
+        }
+
+        @keyframes colorPulse {
+            from { color: var(--accent-color); }
+            to { color: var(--secondary-color); }
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .support-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .support-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .support-button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>If you are not redirected, <a href="https://ovdrstudios.com">click here</a>.</p>
+    <div class="container">
+        <h1>OVDR Studios Shop</h1>
+        <p>There's currently no shop for OVDR Studios, but you can still show your support!</p>
+        <div class="button-container">
+            <a href="https://www.youtube.com/@OVDR/join" class="support-button" target="_blank">Become a YouTube Member</a>
+            <a href="https://bisecthosting.com/OVDRStudios" class="support-button" target="_blank">Get 25% Off at BisectHosting</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.support-button');
+            
+            buttons.forEach((button, index) => {
+                button.style.opacity = '0';
+                button.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    button.style.transition = 'all 0.5s ease';
+                    button.style.opacity = '1';
+                    button.style.transform = 'translateY(0)';
+                }, (index + 1) * 200);
+            });
+        });
+    </script>
 </body>
 </html>
